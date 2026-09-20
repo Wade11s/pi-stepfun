@@ -1,0 +1,37 @@
+{
+  "name": "pi-stepfun",
+  "version": "0.1.0",
+  "description": "Pi extension: StepFun (阶跃星辰) Step Plan subscription provider — step-5-preview, step-3.7-flash, step-3.5-flash(-2603), step-router-v1",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.ts",
+  "files": [
+    "index.ts",
+    "README.md",
+    "README.en.md"
+  ],
+  "keywords": [
+    "pi",
+    "pi-extension",
+    "pi-coding-agent",
+    "stepfun",
+    "step-plan",
+    "step-5-preview",
+    "step-3.7-flash",
+    "provider"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Wade11s/pi-stepfun.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wade11s/pi-stepfun/issues"
+  },
+  "homepage": "https://github.com/Wade11s/pi-stepfun#readme",
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "pi": {
+    "extensions": ["./index.ts"]
+  }
+}
