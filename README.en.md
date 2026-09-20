@@ -2,6 +2,8 @@
 
 [StepFun (阶跃星辰) "Step Plan"](https://platform.stepfun.com/step-plan) subscription provider for the [pi coding agent](https://github.com/earendil-works/pi-mono).
 
+> 中文说明：[README.md](./README.md)
+
 Once you subscribe to Step Plan, this extension lets pi call StepFun flagship models against your monthly Credit pool — headlined by **`step-5-preview`** (new-generation flagship base model, 1M context, image input).
 
 > Reference: [Step Plan Quick Start](https://platform.stepfun.com/docs/zh/step-plan/quick-start)
@@ -78,7 +80,7 @@ The repository includes `.github/workflows/publish.yml`:
 
 1. Bump the version in `package.json`, for example with `npm version patch`.
 2. Push the version tag with `git push --follow-tags` (it must be `vX.Y.Z` and match the package version).
-3. Add `NPM_TOKEN` under **Settings → Secrets and variables → Actions → Secrets**.
+3. Add `NPM_TOKEN` under **Settings → Secrets and variables → Actions → Secrets**. The token must support non-interactive CI publishing (for example, an npm Automation Token); a regular token with publish-time 2FA will fail because CI cannot enter an OTP.
 
 The workflow runs automatically for version tags, verifies the package contents, and publishes to `registry.npmjs.org` with npm provenance.
 

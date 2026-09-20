@@ -2,6 +2,8 @@
 
 为 [pi coding agent](https://github.com/earendil-works/pi-mono) 接入 **阶跃星辰 StepFun「Step Plan」订阅通道**的 provider 扩展。
 
+> English documentation: [README.en.md](./README.en.md)
+
 订阅 [Step Plan](https://platform.stepfun.com/step-plan) 后，即可在 pi 中以订阅额度（Credit 月池）调用阶跃旗舰模型，重点推荐 **`step-5-preview`**（新一代旗舰基模，1M 上下文，支持图片输入）。
 
 > 参考：[Step Plan 快速开始](https://platform.stepfun.com/docs/zh/step-plan/quick-start) · [Step Plan 概述](https://platform.stepfun.com/docs/zh/step-plan/overview)
@@ -81,7 +83,7 @@ Step Plan 以 **Credit** 为统一计费单位（1M Credit = ¥1），按月发�
 
 1. 修改 `package.json` 的版本号并提交，例如运行 `npm version patch`。
 2. 推送版本 Tag：`git push --follow-tags`（格式必须是 `vX.Y.Z`，且与 `package.json` 版本一致）。
-3. 在仓库的 **Settings → Secrets and variables → Actions → Secrets** 中配置 `NPM_TOKEN`。
+3. 在仓库的 **Settings → Secrets and variables → Actions → Secrets** 中配置 `NPM_TOKEN`。该 Token 必须支持 CI 非交互发布（例如 npm Automation Token）；如果账号启用了发布 2FA，普通 Token 会因无法输入 OTP 而失败。
 
 工作流会在版本 Tag 推送时自动检查包内容，然后使用 npm provenance 发布到 `registry.npmjs.org`。
 
