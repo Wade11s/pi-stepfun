@@ -1,5 +1,8 @@
 # pi-stepfun
 
+[![CI](https://github.com/Wade11s/pi-stepfun/actions/workflows/publish.yml/badge.svg)](https://github.com/Wade11s/pi-stepfun/actions/workflows/publish.yml)
+[![npm](https://img.shields.io/npm/v/pi-stepfun.svg)](https://www.npmjs.com/package/pi-stepfun)
+
 [StepFun (阶跃星辰) "Step Plan"](https://platform.stepfun.com/step-plan) subscription provider for the [pi coding agent](https://github.com/earendil-works/pi-mono).
 
 > 中文说明：[README.md](./README.md)
@@ -22,12 +25,38 @@ All models support streaming and tool calls. Prompt caching is supported by `ste
 
 ## Install
 
-```bash
-# User-level (all sessions)
-git clone https://github.com/Wade11s/pi-stepfun.git ~/.pi/agent/extensions/pi-stepfun
+Install with pi's package manager (npm or GitHub source):
 
-# Or project-level
-git clone https://github.com/Wade11s/pi-stepfun.git .pi/extensions/pi-stepfun
+```bash
+# npm (recommended)
+pi install npm:pi-stepfun
+
+# or the GitHub repository
+pi install git:github.com/Wade11s/pi-stepfun
+
+# pin a version
+pi install npm:pi-stepfun@0.1.1
+```
+
+Other options:
+
+```bash
+# try it for the current run only (not written to settings)
+pi -e npm:pi-stepfun
+
+# project-level install (writes .pi/settings.json, shareable with your team)
+pi install -l npm:pi-stepfun
+
+# manual clone
+git clone https://github.com/Wade11s/pi-stepfun.git ~/.pi/agent/extensions/pi-stepfun
+```
+
+Package management:
+
+```bash
+pi list                   # list installed packages
+pi update npm:pi-stepfun  # update to the latest version
+pi remove npm:pi-stepfun  # uninstall
 ```
 
 No build step — pi loads the TypeScript source directly.

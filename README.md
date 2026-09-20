@@ -1,5 +1,8 @@
 # pi-stepfun
 
+[![CI](https://github.com/Wade11s/pi-stepfun/actions/workflows/publish.yml/badge.svg)](https://github.com/Wade11s/pi-stepfun/actions/workflows/publish.yml)
+[![npm](https://img.shields.io/npm/v/pi-stepfun.svg)](https://www.npmjs.com/package/pi-stepfun)
+
 为 [pi coding agent](https://github.com/earendil-works/pi-mono) 接入 **阶跃星辰 StepFun「Step Plan」订阅通道**的 provider 扩展。
 
 > English documentation: [README.en.md](./README.en.md)
@@ -22,15 +25,41 @@
 
 ## 安装
 
-```bash
-# 用户级（所有会话可用）
-git clone https://github.com/Wade11s/pi-stepfun.git ~/.pi/agent/extensions/pi-stepfun
+推荐使用 pi 的包管理器安装（npm 或 GitHub 源均可）：
 
-# 或项目级
-git clone https://github.com/Wade11s/pi-stepfun.git .pi/extensions/pi-stepfun
+```bash
+# npm（推荐）
+pi install npm:pi-stepfun
+
+# 或 GitHub 仓库
+pi install git:github.com/Wade11s/pi-stepfun
+
+# 锁定版本
+pi install npm:pi-stepfun@0.1.1
 ```
 
-无需构建步骤，pi 直接加载 TypeScript 源码。
+其他方式：
+
+```bash
+# 临时试用（仅当前会话生效，不写入 settings）
+pi -e npm:pi-stepfun
+
+# 项目级安装（写入 .pi/settings.json，可与团队共享）
+pi install -l npm:pi-stepfun
+
+# 手动克隆
+git clone https://github.com/Wade11s/pi-stepfun.git ~/.pi/agent/extensions/pi-stepfun
+```
+
+包管理命令：
+
+```bash
+pi list                   # 查看已安装的包
+pi update npm:pi-stepfun  # 更新到最新版
+pi remove npm:pi-stepfun  # 卸载
+```
+
+安装后无需构建步骤，pi 直接加载 TypeScript 源码。
 
 ## 配置 API Key
 
