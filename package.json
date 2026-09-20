@@ -1,6 +1,6 @@
 {
   "name": "pi-stepfun",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Pi extension: StepFun (阶跃星辰) Step Plan subscription provider — step-5-preview, step-3.7-flash, step-3.5-flash(-2603), step-router-v1",
   "license": "MIT",
   "type": "module",
