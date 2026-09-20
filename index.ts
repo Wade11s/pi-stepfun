@@ -9,8 +9,8 @@
  * - step-3.7-flash        flagship multimodal reasoning model, 256K context, text+image input
  * - step-3.5-flash        high-speed reasoning MoE (196B/A11B) tuned for agents & coding
  * - step-3.5-flash-2603   agent-optimized step-3.5-flash (low/high effort only)
- * - step-router-v1        auto-routes between deepseek-v4-pro and step-3.7-flash (Step Plan only;
- *                         text-only, max_tokens ≤ 250K, no web_search tool)
+ * - step-router-v1        auto-routes between deepseek-v4-pro and Step's Flash models (Step Plan
+ *                         only; text-only, max_tokens ≤ 250K, no web_search tool)
  *
  * Auth: set STEP_API_KEY, or run `/login stepfun` and paste a key created at
  * https://platform.stepfun.com (the Step Plan subscription must be active for the key's account).
@@ -42,9 +42,9 @@ const STEP_COMPAT = {
 	maxTokensField: "max_tokens",
 } as const;
 
-/** All three-level models: off can't disable reasoning natively → map to the cheapest tier. */
+/** All three-level models. Step models are always thinking → `off` is unsupported. */
 const EFFORT_LOW_MEDIUM_HIGH = {
-	off: "low",
+	off: null,
 	minimal: null,
 	low: "low",
 	medium: "medium",
@@ -55,7 +55,7 @@ const EFFORT_LOW_MEDIUM_HIGH = {
 
 /** step-3.5-flash-2603 only accepts `low` / `high`. */
 const EFFORT_LOW_HIGH = {
-	off: "low",
+	off: null,
 	minimal: null,
 	low: "low",
 	medium: null,
@@ -65,14 +65,14 @@ const EFFORT_LOW_HIGH = {
 } as const;
 
 /**
- * List prices (¥ per 1M tokens) converted at ≈¥7.1/US$ and rounded.
- * Step Plan itself bills in Credits (1M Credits = ¥1, monthly pool), so these
- * are only pi's best-effort cost estimates. Cache writes are billed like
- * cache-miss input → cacheWrite mirrors the input price.
- *   step-5-preview:      ¥7 / ¥0.35 hit / ¥20 out
- *   step-3.7-flash:      ¥1.35 / ¥0.27 hit / ¥8.1 out
- *   step-3.5-flash(-2603): ¥0.7 / ¥0.14 hit / ¥2.1 out
- *   step-router-v1:      billed per routed model; mid estimate of the two engines
+ * Published list prices (US$ per 1M tokens) from the StepFun pricing page.
+ * Step Plan itself bills in Credits, so these are only pi's best-effort cost
+ * estimates. Cache writes are billed like cache-miss input → cacheWrite
+ * mirrors the input price.
+ *   step-5-preview:        $1.00 / $0.05 hit / $2.70 out
+ *   step-3.7-flash:        $0.20 / $0.04 hit / $1.15 out
+ *   step-3.5-flash(-2603): $0.10 / $0.02 hit / $0.30 out
+ *   step-router-v1:        billed per routed model; estimate between the engines
  */
 const MODELS = [
 	{
@@ -80,7 +80,7 @@ const MODELS = [
 		name: "Step 5 Preview",
 		reasoning: true,
 		input: ["text", "image"] as ("text" | "image")[],
-		cost: { input: 0.99, output: 2.82, cacheRead: 0.05, cacheWrite: 0.99 },
+		cost: { input: 1.0, output: 2.7, cacheRead: 0.05, cacheWrite: 1.0 },
 		contextWindow: 1_000_000,
 		maxTokens: 65536,
 		thinkingLevelMap: { ...EFFORT_LOW_MEDIUM_HIGH },
@@ -91,7 +91,7 @@ const MODELS = [
 		name: "Step 3.7 Flash",
 		reasoning: true,
 		input: ["text", "image"] as ("text" | "image")[],
-		cost: { input: 0.19, output: 1.14, cacheRead: 0.04, cacheWrite: 0.19 },
+		cost: { input: 0.2, output: 1.15, cacheRead: 0.04, cacheWrite: 0.2 },
 		contextWindow: 262_144,
 		maxTokens: 65536,
 		thinkingLevelMap: { ...EFFORT_LOW_MEDIUM_HIGH },
@@ -194,7 +194,7 @@ export default function (pi: ExtensionAPI) {
 					"  step-3.7-flash        256K ctx · text+image · effort low/medium/high",
 					"  step-3.5-flash        256K ctx · text · effort low/medium/high",
 					"  step-3.5-flash-2603   256K ctx · text · effort low/high",
-					"  step-router-v1        256K ctx · 250K max output · text · auto-routes deepseek-v4-pro / step-3.7-flash",
+					"  step-router-v1        256K ctx · 250K max output · text · auto-routes by task complexity",
 					"",
 					"Console: https://platform.stepfun.com",
 					"Docs: https://platform.stepfun.com/docs/zh/step-plan/quick-start",

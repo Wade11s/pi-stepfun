@@ -6,7 +6,7 @@
 
 Once you subscribe to Step Plan, this extension lets pi call StepFun flagship models against your monthly Credit pool — headlined by **`step-5-preview`** (new-generation flagship base model, 1M context, image input).
 
-> Reference: [Step Plan Quick Start](https://platform.stepfun.com/docs/zh/step-plan/quick-start)
+> Reference: [Step Plan Quick Start](https://platform.stepfun.com/docs/zh/step-plan/quick-start) · [Models](https://platform.stepfun.com/docs/zh/guides/models/overview) · [Pricing](https://platform.stepfun.com/docs/zh/guides/pricing/details)
 
 ## Models
 
@@ -16,9 +16,9 @@ Once you subscribe to Step Plan, this extension lets pi call StepFun flagship mo
 | `step-3.7-flash` | Flagship multimodal reasoning (198B/A11B MoE) | 256K | text + image | low / medium / high |
 | `step-3.5-flash` | High-speed reasoning, tuned for agents & coding | 256K | text | low / medium / high |
 | `step-3.5-flash-2603` | Agent-optimized variant, better token efficiency | 256K | text | low / high |
-| `step-router-v1` | Auto-routes between `deepseek-v4-pro` / `step-3.7-flash` | 256K | text | low / medium / high |
+| `step-router-v1` | Auto-routes by task complexity (complex reasoning goes to `deepseek-v4-pro`) | 256K | text | low / medium / high |
 
-All models support streaming and tool calls. Prompt caching is supported by `step-3.7-flash`, `step-3.5-flash`, and `step-3.5-flash-2603` (cache-hit stats show in pi's footer).
+All models support streaming and tool calls. Prompt caching is supported by `step-5-preview`, `step-3.7-flash`, `step-3.5-flash`, and `step-3.5-flash-2603` (cache-hit stats show in pi's footer).
 
 ## Install
 
@@ -52,11 +52,10 @@ or run `/login stepfun` inside pi and paste a key (stored in `~/.pi/agent/auth.j
 /stepfun                          # show provider info
 ```
 
-pi thinking levels map to Step's `reasoning_effort`:
+pi thinking levels map to Step's `reasoning_effort`. Step models cannot disable thinking, so pi has no `off` level:
 
-| pi level | step-5-preview / 3.7-flash / 3.5-flash / router | step-3.5-flash-2603 |
+| pi thinking level | step-5-preview / 3.7-flash / 3.5-flash / router | step-3.5-flash-2603 |
 | --- | --- | --- |
-| off | `low` (Step models can't fully disable thinking) | `low` |
 | low | `low` | `low` |
 | medium | `medium` | — (clamps to `high`) |
 | high | `high` | `high` |
@@ -65,12 +64,12 @@ pi thinking levels map to Step's `reasoning_effort`:
 
 Step Plan bills everything in **Credits** (1M Credits = ¥1), granted monthly. Model usage is converted to Credits at the platform list prices (e.g. `step-3.7-flash` output = ¥8.1 / 1M tokens = 8.1M Credits).
 
-The `$` cost shown in pi is a best-effort estimate converted from list prices (≈¥7.1/US$); actual consumption draws from your Credit pool.
+The `$` cost shown in pi is a best-effort estimate based on the published list prices (USD); actual consumption draws from your Credit pool.
 
 ## Limitations
 
 - `step-router-v1` is Step-Plan-only: no image input, no `web_search` tool, `max_tokens` capped at 250K.
-- Step models are reasoning-native; "off" sends `reasoning_effort: low` to minimize cost.
+- Step models are reasoning-native and cannot disable thinking, so pi has no `off` level; pick `low` to minimize cost.
 - Thinking streams back via `reasoning` / `reasoning_content` and renders as thinking blocks in pi.
 - Context-overflow errors are normalized so pi can auto-compact and retry.
 

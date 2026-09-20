@@ -6,7 +6,7 @@
 
 订阅 [Step Plan](https://platform.stepfun.com/step-plan) 后，即可在 pi 中以订阅额度（Credit 月池）调用阶跃旗舰模型，重点推荐 **`step-5-preview`**（新一代旗舰基模，1M 上下文，支持图片输入）。
 
-> 参考：[Step Plan 快速开始](https://platform.stepfun.com/docs/zh/step-plan/quick-start) · [Step Plan 概述](https://platform.stepfun.com/docs/zh/step-plan/overview)
+> 参考：[Step Plan 快速开始](https://platform.stepfun.com/docs/zh/step-plan/quick-start) · [Step Plan 概述](https://platform.stepfun.com/docs/zh/step-plan/overview) · [模型列表](https://platform.stepfun.com/docs/zh/guides/models/overview) · [定价与限速](https://platform.stepfun.com/docs/zh/guides/pricing/details)
 
 ## 接入的模型
 
@@ -16,9 +16,9 @@
 | `step-3.7-flash` | 旗舰多模态推理模型（198B/A11B MoE） | 256K | 文本 + 图片 | low / medium / high |
 | `step-3.5-flash` | 高速推理模型，智能体与代码任务优化 | 256K | 文本 | low / medium / high |
 | `step-3.5-flash-2603` | 高频 Agent 场景优化版，Token 效率更高 | 256K | 文本 | low / high |
-| `step-router-v1` | 智能路由，按任务自动调度 `deepseek-v4-pro` / `step-3.7-flash` | 256K | 文本 | low / medium / high |
+| `step-router-v1` | 智能路由，按任务复杂度自动调度（复杂推理走 `deepseek-v4-pro`） | 256K | 文本 | low / medium / high |
 
-所有模型均支持流式输出与工具调用；`step-3.7-flash`、`step-3.5-flash` 和 `step-3.5-flash-2603` 还支持提示缓存（pi 会展示缓存命中统计）。
+所有模型均支持流式输出与工具调用；`step-5-preview`、`step-3.7-flash`、`step-3.5-flash` 与 `step-3.5-flash-2603` 还支持提示缓存（pi 会展示缓存命中统计）。
 
 ## 安装
 
@@ -55,11 +55,10 @@ export STEP_API_KEY=你的密钥
 /stepfun                          # 查看本扩展接入信息
 ```
 
-思考档位（Tab 循环切换）与 Step 的 `reasoning_effort` 对应：
+思考档位（Tab 循环切换）与 Step 的 `reasoning_effort` 对应（Step 模型为推理原生模型，无法完全关闭思考，pi 中不提供 `off` 档）：
 
-| pi 档位 | step-5-preview / 3.7-flash / 3.5-flash / router | step-3.5-flash-2603 |
+| pi 思考档位 | step-5-preview / 3.7-flash / 3.5-flash / router | step-3.5-flash-2603 |
 | --- | --- | --- |
-| off | `low`（Step 模型无法完全关闭思考，取最省档） | `low` |
 | low | `low` | `low` |
 | medium | `medium` | —（自动就近取 `high`） |
 | high | `high` | `high` |
@@ -68,12 +67,12 @@ export STEP_API_KEY=你的密钥
 
 Step Plan 以 **Credit** 为统一计费单位（1M Credit = ¥1），按月发放、月内消耗。各模型用量按开放平台价格折算为 Credit 扣减，例如 `step-3.7-flash` 输出 1M tokens = ¥8.1 = 8.1M Credits。
 
-扩展中标注的 `$` 成本为按牌价（¥7.1/US$ 汇率）折算的**近似估算**，仅供 pi 内成本参考，实际以订阅 Credit 月池扣减为准。
+扩展中标注的 `$` 成本为开放平台公开牌价（美元）折算的**近似估算**，仅供 pi 内成本参考，实际以订阅 Credit 月池扣减为准。
 
 ## 限制与说明
 
 - `step-router-v1` 仅 Step Plan 通道可用；不支持图片输入、不支持 `web_search` 工具，`max_tokens` 上限 250K。
-- Step 模型为推理原生模型，无法完全关闭思考；`off` 档会发送 `reasoning_effort: low` 以降低消耗。
+- Step 模型为推理原生模型，无法完全关闭思考，pi 中不提供 `off` 档；如需降低消耗请选择 `low`。
 - 思考内容通过 `reasoning` / `reasoning_content` 字段流式返回，pi 中显示为 thinking 区块。
 - 上下文超限错误已做归一化处理，pi 会自动压缩上下文并重试。
 
