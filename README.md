@@ -35,7 +35,7 @@ pi install npm:pi-stepfun
 pi install git:github.com/Wade11s/pi-stepfun
 
 # 锁定版本
-pi install npm:pi-stepfun@0.1.1
+pi install npm:pi-stepfun@0.2.0
 ```
 
 其他方式：
@@ -104,6 +104,23 @@ Step Plan 以 **Credit** 为统一计费单位（1M Credit = ¥1），按月发�
 - Step 模型为推理原生模型，无法完全关闭思考，pi 中不提供 `off` 档；如需降低消耗请选择 `low`。
 - 思考内容通过 `reasoning` / `reasoning_content` 字段流式返回，pi 中显示为 thinking 区块。
 - 上下文超限错误已做归一化处理，pi 会自动压缩上下文并重试。
+
+## 开发与测试
+
+```bash
+npm install          # 安装开发依赖（TypeScript 与 pi 类型定义）
+npm run typecheck    # 对照 pi 扩展 API 类型检查 index.ts
+npm test             # 运行单元测试（node:test，无需 API Key）
+npm run check        # 以上两步一起跑
+```
+
+测试覆盖：provider 注册参数、五个模型的上下文/输出上限/输入模态、思考档位映射（含 `step-5-preview` 的 `low`/`medium`/`high`）、上下文超限错误归一化与 `/stepfun` 命令。
+
+本地联调（不安装、不改 settings，直接让 pi 加载本目录源码）：
+
+```bash
+pi -e "$(pwd)/index.ts" --list-models stepfun
+```
 
 ## 发布到 npm
 

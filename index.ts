@@ -9,7 +9,7 @@
  * - step-3.7-flash        flagship multimodal reasoning model, 256K context, text+image input
  * - step-3.5-flash        high-speed reasoning MoE (196B/A11B) tuned for agents & coding
  * - step-3.5-flash-2603   agent-optimized step-3.5-flash (low/high effort only)
- * - step-router-v1        auto-routes between deepseek-v4-pro and Step's Flash models (Step Plan
+ * - step-router-v1        auto-routes between deepseek-v4-pro and step-3.7-flash (Step Plan
  *                         only; text-only, max_tokens ≤ 250K, no web_search tool)
  *
  * Auth: set STEP_API_KEY, or run `/login stepfun` and paste a key created at

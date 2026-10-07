@@ -35,7 +35,7 @@ pi install npm:pi-stepfun
 pi install git:github.com/Wade11s/pi-stepfun
 
 # pin a version
-pi install npm:pi-stepfun@0.1.1
+pi install npm:pi-stepfun@0.2.0
 ```
 
 Other options:
@@ -101,6 +101,23 @@ The `$` cost shown in pi is a best-effort estimate based on the published list p
 - Step models are reasoning-native and cannot disable thinking, so pi has no `off` level; pick `low` to minimize cost.
 - Thinking streams back via `reasoning` / `reasoning_content` and renders as thinking blocks in pi.
 - Context-overflow errors are normalized so pi can auto-compact and retry.
+
+## Development & testing
+
+```bash
+npm install          # install dev dependencies (TypeScript + pi type definitions)
+npm run typecheck    # type-check index.ts against the pi extension API
+npm test             # run unit tests (node:test, no API key required)
+npm run check        # both of the above
+```
+
+The suite covers: provider registration, per-model context/output limits and input modalities, thinking-level maps (including `step-5-preview`'s `low`/`medium`/`high`), context-overflow error normalization, and the `/stepfun` command.
+
+Local smoke test (loads this checkout without installing or touching settings):
+
+```bash
+pi -e "$(pwd)/index.ts" --list-models stepfun
+```
 
 ## Publish to npm
 

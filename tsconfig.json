@@ -6,11 +6,7 @@
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "paths": {
-      "@earendil-works/pi-coding-agent": [
-        "/opt/homebrew/Cellar/pi-coding-agent/0.85.1/libexec/lib/node_modules/@earendil-works/pi-coding-agent/dist/index.d.ts"
-      ]
-    }
+    "allowImportingTsExtensions": true
   },
-  "include": ["index.ts"]
+  "include": ["index.ts", "test"]
 }
